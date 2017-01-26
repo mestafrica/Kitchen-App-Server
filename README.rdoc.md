@@ -4,11 +4,11 @@
 
 #Testing specs for Users:
 
-        first_name:  string
-        last_name:  string
-        email:          string
-        nationality:  string
-        sex:             string
+        first_name:             string
+        last_name:             string
+        email:                     string
+        nationality:             string
+        sex:                        string
 
 
 ##FIRST NAME
@@ -38,10 +38,10 @@ ________________________________________________________________________________
 
 #Testing specs for Meal:
 
-        name:                 string
-        picture_path:      string
-        description:         text
-        nutrient_value:    text
+        name:                                   string
+        picture_path:                        string
+        description:                           text
+        nutrient_value:                      text
 
 
 
@@ -64,3 +64,5 @@ ________________________________________________________________________________
 * nutrient_value must be _present_
 * nutrient_value within 40 characters and less than 300 characters
 
+
+__________________________________________________________________________________________________________
