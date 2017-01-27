@@ -24,6 +24,7 @@
 * email must be _present_
 * email must be within 1 characters and less than 101 characters
 * email must be unique
+* email address must be valid
 
 
 ##NATIONALITY
