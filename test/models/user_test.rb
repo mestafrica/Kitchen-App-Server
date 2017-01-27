@@ -16,19 +16,18 @@ class UserTest < ActiveSupport::TestCase
         assert_not @user.valid?
      end
 
-    test "Last name should be present" do
-        @.last_name = " "
-        assert_not @user.valid?
-     end
-
-
-     test "First name not be too long" do
+      test "First name not be too long" do
         @user.first_name ="a"*101
         assert_not @user.valid?
      end
 
       test " First name not be too short" do
         @user.last_name ="a"*2
+        assert_not @user.valid?
+     end
+
+    test "Last name should be present" do
+        @user.last_name = " "
         assert_not @user.valid?
      end
 
@@ -41,6 +40,32 @@ class UserTest < ActiveSupport::TestCase
         @user.last_name ="a"*2
         assert_not @user.valid?
      end
+
+     test "Nationality should be present" do
+        @user.nationality = " "
+        assert_not @user.valid?
+     end
+
+     test "Nationality not be too long" do
+        @user.nationality ="a"*101
+        assert_not @user.valid?
+     end
+
+      test " Nationality name not be too short" do
+        @user.nationality ="a"*2
+        assert_not @user.valid?
+     end
+
+
+     test "Sex should be present" do
+        @user.sex = " "
+        assert_not @user.valid?
+     end
+
+
+
+
+
 
 
      test "User email should be present" do
@@ -73,6 +98,8 @@ class UserTest < ActiveSupport::TestCase
                 @user.email = email
                 assert_not @user.valid?, "#{email.inspect} is an invalid email address"
      end
+
+
 
 
 end
