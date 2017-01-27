@@ -52,17 +52,14 @@ ________________________________________________________________________________
 
 ##PICTURE_PATH
 * picture_path must be _present_
-* last_name must be within 5 characters and less than 100 characters and cannot have special characters
+* picture_path must be within 5 characters and less than 100 characters and cannot have special characters
+* picture_path must not be null
 
 ##DESCRIPTION
 * description must be _present_
 * description must be within 40 characters and less than 500 characters
 
 
-
-##NUTRIENT_VALUE
-* nutrient_value must be _present_
-* nutrient_value within 40 characters and less than 300 characters
 
 
 __________________________________________________________________________________________________________
