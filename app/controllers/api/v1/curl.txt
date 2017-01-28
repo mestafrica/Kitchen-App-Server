@@ -1,0 +1,12 @@
+Create New Menu
+----------------
+curl -H "Content-Type:application/json; charset=utf-8" -d '{"day_created":"Sat Jan 28 2017 15:25:01 GMT+0000 (GMT)","breakfast":"1,2","lunch":"1,2","supper":"1,4"}' http://localhost:3000/example
+
+Update Menu
+------------
+curl -H "Content-Type:application/json; charset=utf-8"-X PUT -d '{"id":1,"day_created":"Sat Jan 28 2017 15:25:01 GMT+0000 (GMT)","breakfast":"1,3","lunch":"1,4","supper":"1,5"}' http://localhost:3000/up_example
+
+
+Delete Menu
+------------
+curl -H "Content-Type:application/json; charset=utf-8"-X DELETE -d '{"id":6}' http://localhost:3000/del_example
