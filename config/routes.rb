@@ -5,8 +5,14 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users # Routing to the V1 module.. We also want it to appear in our URL.
       resources :meals
+      resources :menus
     end
   end
+
+    match '/example' => 'api/v1/menus#create', via: :post
+    match '/up_example' => 'api/v1/menus#update', via: :put
+    match '/del_example' => 'api/v1/menus#destroy', via: :delete
+  
 
   #from Now on routes go like this: 
   # 1. /v1/users = to access all users
