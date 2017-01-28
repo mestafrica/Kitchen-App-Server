@@ -6,6 +6,9 @@ git_source(:github) do |repo_name|
 end
 
 
+#Use rails console in Windows without having to polling every time
+gem 'wdm'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use sqlite3 as the database for Active Record
@@ -32,19 +35,27 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 
+<<<<<<< HEAD
+  gem 'rspec', platform: :mri
+=======
 
   # Use RSpec for specs
   gem 'rspec-rails', '>= 3.5.0'
 
   # Use Factory Girl for generating random test data
   gem 'factory_girl_rails'
+>>>>>>> develop
 end
+
+
 
 group :development do
   gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'web-console'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
