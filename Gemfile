@@ -7,7 +7,7 @@ end
 
 
 #Use rails console in Windows without having to polling every time
-gem 'wdm'
+#gem 'wdm'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'

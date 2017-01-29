@@ -7,6 +7,7 @@ module Api::V1
        end
 
        def show
+           @menu = Menu.find(params[:id])
            render json: @menu
        end
 
