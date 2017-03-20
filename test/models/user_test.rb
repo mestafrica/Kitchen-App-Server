@@ -7,6 +7,38 @@ class UserTest < ActiveSupport::TestCase
 
      end
 
+
+
+     filename ="#{Rails.root}/test/countries.json"
+
+    # read_file read file and return the output
+    def read_file(filename)
+        data_hash= {}
+        file = File.read(filename)
+        data_hash = JSON.parse(file)
+        return data_hash
+    end
+
+    def get_countries(jsondata)
+        data_hash ={}
+        countries = []
+        counter = 0
+        data_hash = read_file(jsondata)
+
+        while counter <data_hash.length
+            # puts (data_hash[counter]["name"]["common"])
+            countries.push(data_hash[counter]["name"]["common"])
+
+            counter +=1
+        end
+
+
+        return countries
+
+    end
+
+
+
      test "user should be valid" do
             assert @user.valid?
      end
@@ -56,6 +88,18 @@ class UserTest < ActiveSupport::TestCase
         assert_not @user.valid?
      end
 
+      test "Nationality validation should accept valid country names " do
+        valid_countries = get_countries(filename)
+        valid_countries.each do|countries|
+            assert @chef.valid?,"#{email.inspect} is valid email address"
+        end
+      end
+
+
+
+
+
+
 
      test "Sex should be present" do
         @user.sex = " "
@@ -85,14 +129,14 @@ class UserTest < ActiveSupport::TestCase
         assert_not @user1.valid?
      end
 
-     test "Email validation should be accept valid addresses " do
+     test "Email validation should accept valid addresses " do
         valid_addresses =%w[user@mel.com R_TDD-DS@example.geeks.com user@example.com first.last@user.co lau+joe@monk.com   ]
         valid_addresses.each do|email|
             assert @chef.valid?,"#{email.inspect} is valid email address"
         end
      end
 
-     test "Email validation should be reject invalid addresses " do
+     test "Email validation should reject invalid addresses " do
        invalid_addr = %w[ahdfla@eee+hdlfadfa.com dfja@yahoom,com first.last_at_news.com djhfakdf@example. dfhkaf@example.hello.com]
             invalid_addr.each do|email|
                 @user.email = email
