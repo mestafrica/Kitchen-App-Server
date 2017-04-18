@@ -1,10 +1,10 @@
 module Api::V1
   class OrdersController < ApplicationController
+    before_action :set_order, only: [:show, :update, :destroy]
 
-    before_action :set_user, only: [:show, :update, :destroy]
-  
     def index
       @order = Order.all
+
       render json: @order
     end
 
@@ -14,6 +14,7 @@ module Api::V1
 
     def create
       @order = Order.new(order_params)
+
       if @order.save
         render json: @order
       else
@@ -23,9 +24,9 @@ module Api::V1
 
     def update
       if @order.update(order_params)
-          render json: @order
-        else
-          render json: @order.errors, status: :unprocessable_entity  
+        render json: @order
+      else
+        render json: @order.errors, status: :unprocessable_entity
       end
     end
 
@@ -34,13 +35,13 @@ module Api::V1
     end
 
     private
-      def set_order
-        @order = Order.find(params[:id])
-      end
 
-      def order_params
-        params.require(:order).permit(:user_id, :meal_id, :menu_id)
-      end
+    def set_order
+      @order = Order.find(params[:id])
+    end
+
+    def order_params
+      params.require(:order).permit(:user_id, :meal_id, :menu_id)
+    end
   end
-
 end

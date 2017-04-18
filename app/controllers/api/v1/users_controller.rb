@@ -1,6 +1,5 @@
 module Api::V1
   class UsersController < ApplicationController
-
     before_action :set_user, only: [:show, :update, :destroy]
 
     def index
@@ -34,12 +33,18 @@ module Api::V1
     end
 
     private
-      def set_user
-        @user = User.find(params[:id])
-      end
 
-      def user_params
-        params.require(:user).permit(:first_name, :last_name, :email, :nationality, :sex, :kind)
-      end
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    def user_params
+      params.require(:user).permit(:first_name,
+                                   :last_name,
+                                   :email,
+                                   :nationality,
+                                   :sex,
+                                   :kind)
+    end
   end
 end
