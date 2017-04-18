@@ -19,7 +19,7 @@ module Api::V1
         # TODO: Figure out why location: throws an
         #   'undefined method `menu_url` exception' when the code below is run
         #   render json: @menu, status: :created, location: @menu
-        render json: @menu, status: :created, location: @menu
+        render json: @menu
       else
         render json: @menu.errors, status: :unprocessable_entity
       end

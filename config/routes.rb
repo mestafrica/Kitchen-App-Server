@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/api-docs', to: redirect('/api-docs.html')
+
 
   # Scope: Allows routing to controllers without showing it in the URL
   scope module: 'api' do
