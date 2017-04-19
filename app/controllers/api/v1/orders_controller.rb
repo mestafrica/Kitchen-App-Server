@@ -42,7 +42,7 @@ module Api::V1
 
     def order_params
       params.require(:order).permit(:user_id,
-                                    :menu_id,
+                                    :serving_date,
                                     :breakfast_id,
                                     :lunch_id,
                                     :supper_id)

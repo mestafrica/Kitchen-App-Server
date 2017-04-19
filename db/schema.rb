@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419115554) do
+ActiveRecord::Schema.define(version: 20170419173412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "breakfast_options", force: :cascade do |t|
+    t.date     "serving_date"
+    t.integer  "meal_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["meal_id"], name: "index_breakfast_options_on_meal_id", using: :btree
+  end
+
+  create_table "lunch_options", force: :cascade do |t|
+    t.date     "serving_date"
+    t.integer  "meal_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["meal_id"], name: "index_lunch_options_on_meal_id", using: :btree
+  end
 
   create_table "meals", force: :cascade do |t|
     t.string   "name"
@@ -23,42 +39,44 @@ ActiveRecord::Schema.define(version: 20170419115554) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "menus", force: :cascade do |t|
-    t.date     "menu_date"
-    t.integer  "breakfast_choices", default: [], null: false, array: true
-    t.integer  "lunch_choices",     default: [], null: false, array: true
-    t.integer  "supper_choices",    default: [], null: false, array: true
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "menu_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.date     "serving_date"
     t.integer  "breakfast_id"
     t.integer  "lunch_id"
     t.integer  "supper_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.index ["breakfast_id"], name: "index_orders_on_breakfast_id", using: :btree
     t.index ["lunch_id"], name: "index_orders_on_lunch_id", using: :btree
-    t.index ["menu_id"], name: "index_orders_on_menu_id", using: :btree
+    t.index ["serving_date"], name: "index_orders_on_serving_date", using: :btree
     t.index ["supper_id"], name: "index_orders_on_supper_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
+  end
+
+  create_table "supper_options", force: :cascade do |t|
+    t.date     "serving_date"
+    t.integer  "meal_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["meal_id"], name: "index_supper_options_on_meal_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.integer  "nationality"
     t.integer  "sex"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "user_type",   default: 0, null: false
+    t.integer  "nationality"
+    t.integer  "user_type"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
+  add_foreign_key "breakfast_options", "meals"
+  add_foreign_key "lunch_options", "meals"
   add_foreign_key "orders", "meals", column: "breakfast_id"
   add_foreign_key "orders", "meals", column: "lunch_id"
   add_foreign_key "orders", "meals", column: "supper_id"
+  add_foreign_key "supper_options", "meals"
 end
