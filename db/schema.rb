@@ -25,11 +25,11 @@ ActiveRecord::Schema.define(version: 20170419115554) do
 
   create_table "menus", force: :cascade do |t|
     t.date     "menu_date"
-    t.integer  "breakfast",  default: [], null: false, array: true
-    t.integer  "lunch",      default: [], null: false, array: true
-    t.integer  "supper",     default: [], null: false, array: true
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "breakfast_choices", default: [], null: false, array: true
+    t.integer  "lunch_choices",     default: [], null: false, array: true
+    t.integer  "supper_choices",    default: [], null: false, array: true
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "orders", force: :cascade do |t|
