@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419115452) do
+ActiveRecord::Schema.define(version: 20170419115554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,12 +34,16 @@ ActiveRecord::Schema.define(version: 20170419115452) do
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "meal_id"
     t.integer  "menu_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["meal_id"], name: "index_orders_on_meal_id", using: :btree
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "breakfast_id"
+    t.integer  "lunch_id"
+    t.integer  "supper_id"
+    t.index ["breakfast_id"], name: "index_orders_on_breakfast_id", using: :btree
+    t.index ["lunch_id"], name: "index_orders_on_lunch_id", using: :btree
     t.index ["menu_id"], name: "index_orders_on_menu_id", using: :btree
+    t.index ["supper_id"], name: "index_orders_on_supper_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
@@ -54,4 +58,7 @@ ActiveRecord::Schema.define(version: 20170419115452) do
     t.integer  "user_type",   default: 0, null: false
   end
 
+  add_foreign_key "orders", "meals", column: "breakfast_id"
+  add_foreign_key "orders", "meals", column: "lunch_id"
+  add_foreign_key "orders", "meals", column: "supper_id"
 end
