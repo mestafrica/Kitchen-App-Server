@@ -8,4 +8,11 @@ class User < ApplicationRecord
 
   has_one :order
 
+  validates :first_name,
+            :last_name,
+            :email,
+            :sex,
+            :nationality,
+            :user_type,
+            presence: true
 end
