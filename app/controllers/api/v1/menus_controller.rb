@@ -13,7 +13,7 @@ module Api::V1
 
     def create
       @menu = Menu.new(menu_params)
-      @menu.day_created = Date.parse(menu_params[:day_created])
+      @menu.menu_date = Date.parse(menu_params[:menu_date])
 
       if @menu.save
         # TODO: Figure out why location: throws an
@@ -43,18 +43,11 @@ module Api::V1
       @menu = Menu.find(params[:id])
     end
 
-    def parse_data
-      @menu.day_created = Date.parse(menu_params['day_created'])
-      @menu.breakfast = menu_params['breakfast'].split(',')
-      @menu.lunch = menu_params['lunch'].split(',')
-      @menu.supper = menu_params['supper'].split(',')
-    end
-
     def menu_params
-      params.require(:menu).permit(:day_created,
-                                   breakfast: [],
-                                   lunch: [],
-                                   supper: [])
+      params.require(:menu).permit(:menu_date,
+                                   breakfast_choices: [],
+                                   lunch_choices: [],
+                                   supper_choices: [])
     end
   end
 end

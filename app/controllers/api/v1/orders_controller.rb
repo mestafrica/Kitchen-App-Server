@@ -41,7 +41,11 @@ module Api::V1
     end
 
     def order_params
-      params.require(:order).permit(:user_id, :meal_id, :menu_id)
+      params.require(:order).permit(:user_id,
+                                    :menu_id,
+                                    :breakfast_id,
+                                    :lunch_id,
+                                    :supper_id)
     end
   end
 end

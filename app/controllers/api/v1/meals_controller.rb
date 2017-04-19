@@ -42,8 +42,7 @@ module Api::V1
     def meal_params
       params.require(:meal).permit(:name,
                                    :description,
-                                   :picture_path,
-                                   :meal_type)
+                                   :picture_path)
     end
   end
 end

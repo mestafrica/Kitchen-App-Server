@@ -45,7 +45,7 @@ module Api::V1
                                    :email,
                                    :nationality,
                                    :sex,
-                                   :kind)
+                                   :user_type)
     end
   end
 end
