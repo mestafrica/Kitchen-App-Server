@@ -12,4 +12,7 @@ class Meal < ApplicationRecord
             length: { maximum: 500 } # Incase it is a recipe on how to cook...
 
   has_many :orders
+  has_many :breakfast_options
+  has_many :lunch_options
+  has_many :supper_options
 end
