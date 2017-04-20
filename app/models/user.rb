@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   enum user_type: [:kitchen_staff, :eit, :fellow, :minc]
 
-  has_one :order
+  has_many :orders
 
   validates :first_name,
             :last_name,
