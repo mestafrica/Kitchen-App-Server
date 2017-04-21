@@ -7,7 +7,7 @@ class Api::V1::MenusController < ApplicationController
     end_date = Date.parse params[:end_date]
     @menus = Menu.fetch_range(start_date, end_date)
 
-    render json: @menus, include: ['breakfast_options.meal']
+    render json: @menus, include: %w(breakfast_options.meal lunch_options.meal supper_options.meal)
   end
 
   # GET /menus/1
@@ -15,22 +15,23 @@ class Api::V1::MenusController < ApplicationController
     date = Date.parse params[:id]
     @menu = Menu.new(date: date)
 
-    render json: @menu, include: ['breakfast_options.meal']
+    render json: @menu, include: %w(breakfast_options.meal lunch_options.meal supper_options.meal)
   end
 
   # POST /menus
   def create
-    @menu = Menu.new
-    @menu.date = menu_params[:date]
-    @menu.breakfast_options = menu_params[:breakfast_options]
-    @menu.lunch_options = menu_params[:lunch_options]
-    @menu.supper_options = menu_params[:supper_options]
+    @menu = Menu.create(date: menu_params[:date],
+                        breakfast_options: menu_params[:breakfast_options],
+                        lunch_options: menu_params[:lunch_options],
+                        supper_options: menu_params[:supper_options])
 
-    if @menu.save
-      render json: @menu, include: ['breakfast_options.meal'], status: :created#, location: v1_menu_url @menu
-    else
-      render json: @menu.errors, status: :unprocessable_entity
-    end
+    render json: @menu, include: %w(breakfast_options.meal lunch_options.meal supper_options.meal), status: :created#, location: v1_menu_url @menu
+
+    # if @menu.save
+    #   render json: @menu, include: ['breakfast_options.meal'], status: :created#, location: v1_menu_url @menu
+    # else
+    #   render json: @menu.errors, status: :unprocessable_entity
+    # end
   end
 
   # PATCH/PUT /menus/1
