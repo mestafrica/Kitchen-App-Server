@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       resources :supper_options
       resources :lunch_options
       resources :breakfast_options
+      resources :menus
+
+      get 'menus/:start_date/:end_date', to: 'menus#index'
     end
   end
 

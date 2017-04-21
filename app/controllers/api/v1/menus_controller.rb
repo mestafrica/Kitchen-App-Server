@@ -1,53 +1,61 @@
-module Api::V1
-  class MenusController < ApplicationController
-    before_action :set_menu, only: [:show, :update, :destroy]
+class Api::V1::MenusController < ApplicationController
+  # before_action :set_menu, only: [:show, :update, :destroy]
 
-    def index
-      @menus = Menu.all
-      render json: @menus
+  # GET /menus
+  def index
+    start_date = Date.parse params[:start_date]
+    end_date = Date.parse params[:end_date]
+    @menus = Menu.fetch_range(start_date, end_date)
+
+    render json: @menus, include: ['breakfast_options.meal']
+  end
+
+  # GET /menus/1
+  def show
+    date = Date.parse params[:id]
+    @menu = Menu.new(date: date)
+
+    render json: @menu, include: ['breakfast_options.meal']
+  end
+
+  # POST /menus
+  def create
+    @menu = Menu.new
+    @menu.date = menu_params[:date]
+    @menu.breakfast_options = menu_params[:breakfast_options]
+    @menu.lunch_options = menu_params[:lunch_options]
+    @menu.supper_options = menu_params[:supper_options]
+
+    if @menu.save
+      render json: @menu, include: ['breakfast_options.meal'], status: :created#, location: v1_menu_url @menu
+    else
+      render json: @menu.errors, status: :unprocessable_entity
     end
+  end
 
-    def show
+  # PATCH/PUT /menus/1
+  def update
+    if @menu.update(menu_params)
       render json: @menu
+    else
+      render json: @menu.errors, status: :unprocessable_entity
     end
+  end
 
-    def create
-      @menu = Menu.new(menu_params)
-      @menu.menu_date = Date.parse(menu_params[:menu_date])
+  # DELETE /menus/1
+  def destroy
+    @menu.destroy
+  end
 
-      if @menu.save
-        # TODO: Figure out why location: throws an
-        #   'undefined method `menu_url` exception' when the code below is run
-        #   render json: @menu, status: :created, location: @menu
-        render json: @menu
-      else
-        render json: @menu.errors, status: :unprocessable_entity
-      end
-    end
+  private
 
-    def update
-      if @menu.update(menu_params)
-        render json: @menu
-      else
-        render json: @menu.errors, status: :unprocessable_entity
-      end
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_menu
+    @menu = Menu.find(params[:id])
+  end
 
-    def destroy
-      @menu.destroy
-    end
-
-    private
-
-    def set_menu
-      @menu = Menu.find(params[:id])
-    end
-
-    def menu_params
-      params.require(:menu).permit(:menu_date,
-                                   breakfast_choices: [],
-                                   lunch_choices: [],
-                                   supper_choices: [])
-    end
+  # Only allow a trusted parameter "white list" through.
+  def menu_params
+    params.fetch(:menu, {})
   end
 end
