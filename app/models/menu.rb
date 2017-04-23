@@ -28,8 +28,8 @@ class Menu < ActiveModelSerializers::Model
 
   def self.find_by_range(start_date, end_date)
     menus = []
-    (start_date..end_date).each do |day|
-      menus.push Menu.new(date: day)
+    (start_date..end_date).each do |serving_date|
+      menus.push Menu.new(serving_date: serving_date)
     end
     menus
   end
