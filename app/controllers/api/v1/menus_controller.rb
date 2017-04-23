@@ -36,16 +36,23 @@ class Api::V1::MenusController < ApplicationController
 
   # PATCH/PUT /menus/1
   def update
-    if @menu.update(menu_params)
-      render json: @menu
-    else
-      render json: @menu.errors, status: :unprocessable_entity
-    end
+    @menu = Menu.update(date: params[:id],
+                        breakfast_options: menu_params[:breakfast_options],
+                        lunch_options: menu_params[:lunch_options],
+                        supper_options: menu_params[:supper_options])
+
+    render json: @menu, include: %w(breakfast_options.meal lunch_options.meal supper_options.meal), status: :created#, location: v1_menu_url @menu
+
+    # if @menu.save
+    #   render json: @menu, include: ['breakfast_options.meal'], status: :created#, location: v1_menu_url @menu
+    # else
+    #   render json: @menu.errors, status: :unprocessable_entity
+    # end
   end
 
   # DELETE /menus/1
   def destroy
-    @menu.destroy
+    @menu = Menu.destroy(date: params[:id])
   end
 
   private
