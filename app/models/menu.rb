@@ -1,21 +1,32 @@
+# The Menu model is a convenient class for creating breakfast_options,
+# lunch_options and supper_options for a particular day
 class Menu < ActiveModelSerializers::Model
   include ActiveModel::Model
 
-  attr_accessor :date
+  attr_accessor :serving_date
+  attr_accessor :breakfast_choices
+  attr_accessor :lunch_choices
+  attr_accessor :supper_choices
+
+  validates :serving_date, presence: true
 
   def breakfast_options
-    BreakfastOption.where(serving_date: date)
+    BreakfastOption.where(serving_date: serving_date)
   end
 
   def lunch_options
-    LunchOption.where(serving_date: date)
+    LunchOption.where(serving_date: serving_date)
   end
 
   def supper_options
-    SupperOption.where(serving_date: date)
+    SupperOption.where(serving_date: serving_date)
   end
 
-  def self.fetch_range(start_date, end_date)
+  def self.find(serving_date)
+    Menu.new(serving_date: serving_date)
+  end
+
+  def self.find_by_range(start_date, end_date)
     menus = []
     (start_date..end_date).each do |day|
       menus.push Menu.new(date: day)
@@ -23,38 +34,36 @@ class Menu < ActiveModelSerializers::Model
     menus
   end
 
-  def self.create(attributes)
-    date = Date.parse(attributes[:date])
-    breakfast_options = attributes[:breakfast_options]
-    lunch_options = attributes[:lunch_options]
-    supper_options = attributes[:supper_options]
+  def persisted?
+    false
+  end
 
+  def save
+    if valid?
+      destroy
+      persist!
+      true
+    else
+      false
+    end
+  end
+
+  def destroy
     ActiveRecord::Base.transaction do
-      create_breakfast_options(date, breakfast_options)
-      create_lunch_options(date, lunch_options)
-      create_supper_options(date, supper_options)
-    end
-    Menu.new date: date
-  end
-
-  def self.create_breakfast_options(date, breakfast_options)
-    return if breakfast_options.nil?
-    breakfast_options.each do |breakfast_option|
-      BreakfastOption.create(serving_date: date, meal_id: breakfast_option[:meal_id])
+      BreakfastOption.destroy_all(serving_date: serving_date)
+      LunchOption.destroy_all(serving_date: serving_date)
+      SupperOption.destroy_all(serving_date: serving_date)
     end
   end
 
-  def self.create_lunch_options(date, lunch_options)
-    return if lunch_options.nil?
-    lunch_options.each do |lunch_options|
-      LunchOption.create(serving_date: date, meal_id: lunch_options[:meal_id])
-    end
-  end
+  private
 
-  def self.create_supper_options(date, supper_options)
-    return if supper_options.nil?
-    supper_options.each do |supper_options|
-      SupperOption.create(serving_date: date, meal_id: supper_options[:meal_id])
+  def persist!
+    ActiveRecord::Base.transaction do
+      BreakfastOption.create_all_by_serving_date!(serving_date,
+                                                  breakfast_choices)
+      LunchOption.create_all_by_serving_date!(serving_date, lunch_choices)
+      SupperOption.create_all_by_serving_date!(serving_date, supper_choices)
     end
   end
 end
