@@ -15,4 +15,7 @@ class User < ApplicationRecord
             :nationality,
             :user_type,
             presence: true
+
+  # Prevent any 2 users from having the same email address
+  validates :email, uniqueness: true
 end
