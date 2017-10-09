@@ -1,0 +1,1839 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KitchenApp</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+        hljs.configure({
+            tabReplace: '    ',
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <style>body {
+    position: relative;
+}
+
+h1 {
+    margin-top: 5px;
+}
+
+h1, h2, h3, h4 {
+    color: #2b2b2b;
+}
+
+h2:after {
+    content: ' ';
+}
+
+h5 {
+    font-weight: bold;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    display: none;
+    position: absolute;
+    margin-left: 8px;
+}
+
+h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a {
+    color: #a5a5a5;
+    display: initial;
+}
+
+.nav.nav-tabs > li > a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.tab-content {
+    padding-top: 8px;
+}
+
+.table {
+    margin-bottom: 8px;
+}
+
+pre {
+    border-radius: 0px;
+    border: none;
+}
+
+pre code {
+    margin: -9.5px;
+}
+
+.request {
+    margin-top: 12px;
+    margin-bottom: 24px;
+}
+
+.response-text-sample {
+    padding: 0px !important;
+}
+
+.response-text-sample pre {
+    margin-bottom: 0px;
+}
+
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 250px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #2b2b2b;
+    padding-top: 20px;
+}
+
+#sidebar-wrapper ul {
+    width: 250px;
+}
+
+#sidebar-wrapper ul li {
+    margin-right: 10px;
+}
+
+#sidebar-wrapper ul li a:hover {
+    background: inherit;
+    text-decoration: none;
+}
+
+#sidebar-wrapper ul li a {
+    display: block;
+    color: #ECF0F1;
+    padding: 6px 15px;
+}
+
+#sidebar-wrapper ul li ul {
+    padding-left: 25px;
+}
+
+#sidebar-wrapper ul li ul li a {
+    padding: 1px 0px;
+}
+
+#sidebar-wrapper ul li a:hover,
+#sidebar-wrapper ul li a:focus {
+    color: #e0c46c;
+    border-right: solid 1px #e0c46c;
+}
+
+#sidebar-wrapper ul li.active > a {
+    color: #e0c46c;
+    border-right: solid 3px #e0c46c;
+}
+
+#sidebar-wrapper ul li:not(.active) ul {
+    display: none;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px 15px 15px 250px;
+}
+</style>
+</head>
+<body data-spy="scroll" data-target=".scrollspy">
+<div id="sidebar-wrapper">
+    <div class="scrollspy">
+    <ul id="main-menu" data-spy="affix" class="nav">
+        <li>
+            <a href="#doc-general-notes">General notes</a>
+        </li>
+        
+        <li>
+            <a href="#doc-api-detail">API detail</a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="#folder-breakfastoptions">BreakfastOptions</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-breakfastoptions-create-breakfastoption">Create BreakfastOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-breakfastoptions-read-breakfastoption">Read BreakfastOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-breakfastoptions-read-breakfastoptions">Read BreakfastOptions</a>
+                </li>
+                
+                <li>
+                    <a href="#request-breakfastoptions-update-breakfastoption">Update BreakfastOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-breakfastoptions-delete-breakfastoption">Delete BreakfastOption</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-lunchoptions">LunchOptions</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-lunchoptions-create-lunchoption">Create LunchOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-lunchoptions-read-lunchoption">Read LunchOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-lunchoptions-read-lunchoptions">Read LunchOptions</a>
+                </li>
+                
+                <li>
+                    <a href="#request-lunchoptions-update-lunchoption">Update LunchOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-lunchoptions-delete-lunchoption">Delete LunchOption</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-meals">Meals</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-meals-create-meal">Create Meal</a>
+                </li>
+                
+                <li>
+                    <a href="#request-meals-read-meal">Read Meal</a>
+                </li>
+                
+                <li>
+                    <a href="#request-meals-read-meals">Read Meals</a>
+                </li>
+                
+                <li>
+                    <a href="#request-meals-update-meal">Update Meal</a>
+                </li>
+                
+                <li>
+                    <a href="#request-meals-delete-meal">Delete Meal</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-menu">Menu</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-menu-create-menu">Create menu</a>
+                </li>
+                
+                <li>
+                    <a href="#request-menu-read-menu">Read menu</a>
+                </li>
+                
+                <li>
+                    <a href="#request-menu-read-menus">Read menus</a>
+                </li>
+                
+                <li>
+                    <a href="#request-menu-delete-menu">Delete Menu</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-order">Order</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-order-create-order">Create Order</a>
+                </li>
+                
+                <li>
+                    <a href="#request-order-read-order">Read Order</a>
+                </li>
+                
+                <li>
+                    <a href="#request-order-read-orders">Read Orders</a>
+                </li>
+                
+                <li>
+                    <a href="#request-order-update-order">Update Order</a>
+                </li>
+                
+                <li>
+                    <a href="#request-order-delete-order">Delete Order</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-supperoptions">SupperOptions</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-supperoptions-create-supperoption">Create SupperOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-supperoptions-read-supperoption">Read SupperOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-supperoptions-read-supperoptions">Read SupperOptions</a>
+                </li>
+                
+                <li>
+                    <a href="#request-supperoptions-update-supperoption">Update SupperOption</a>
+                </li>
+                
+                <li>
+                    <a href="#request-supperoptions-delete-supperoption">Delete SupperOption</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        <li>
+            <a href="#folder-users">Users</a>
+            <ul>
+                
+                <li>
+                    <a href="#request-users-create-user">Create User</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-read-user">Read User</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-read-users">Read Users</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-update-user">Update User</a>
+                </li>
+                
+                <li>
+                    <a href="#request-users-delete-user">Delete User</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+    </ul>
+</div>
+
+</div>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>KitchenApp</h1>
+
+                <h2 id="doc-general-notes">
+                    General notes
+                    <a href="#doc-general-notes"><i class="glyphicon glyphicon-link"></i></a>
+                </h2>
+
+                <p>API for the MEST Kitchen Online Ordering System (MKOO)</p>
+
+
+                
+
+                <h2 id="doc-api-detail">
+                    API detail
+                    <a href="#doc-api-detail"><i class="glyphicon glyphicon-link"></i></a>
+                </h2>
+
+                
+
+
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-breakfastoptions">
+                        BreakfastOptions
+                        <a href="#folder-breakfastoptions"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>BreakfastOptions, LunchOptions and SupperOptions are used to create the menu for each day.</p>
+
+<p>A BreakfastOption object specifies a particular meal and a date.</p>
+
+<p>A query can be made for the BreakfastOptions for a particular date. The returned list can be used to create a menu of choices, from which a user can select one as their breakfast order for that day.</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-breakfastoptions-create-breakfastoption">
+                            Create BreakfastOption
+                            <a href="#request-breakfastoptions-create-breakfastoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create a breakfast option</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-breakfastoptions-create-breakfastoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-breakfastoptions-create-breakfastoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-breakfastoptions-create-breakfastoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"breakfast_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 1
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/breakfast_options"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-breakfastoptions-create-breakfastoption-example-http">
+                                    <pre><code class="hljs http">POST /v1/breakfast_options HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"breakfast_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 1
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-breakfastoptions-read-breakfastoption">
+                            Read BreakfastOption
+                            <a href="#request-breakfastoptions-read-breakfastoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Fetch a BreakfastOption by it&rsquo;s id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-breakfastoptions-read-breakfastoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-breakfastoptions-read-breakfastoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-breakfastoptions-read-breakfastoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/breakfast_options/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-breakfastoptions-read-breakfastoption-example-http">
+                                    <pre><code class="hljs http">GET /v1/breakfast_options/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-breakfastoptions-read-breakfastoptions">
+                            Read BreakfastOptions
+                            <a href="#request-breakfastoptions-read-breakfastoptions"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Fetch all BreakfastOptions in the database.</p>
+
+<p>This endpoint is not very useful for anything, except debugging</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-breakfastoptions-read-breakfastoptions-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-breakfastoptions-read-breakfastoptions-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-breakfastoptions-read-breakfastoptions-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/breakfast_options"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-breakfastoptions-read-breakfastoptions-example-http">
+                                    <pre><code class="hljs http">GET /v1/breakfast_options HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-breakfastoptions-update-breakfastoption">
+                            Update BreakfastOption
+                            <a href="#request-breakfastoptions-update-breakfastoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update a BreakfastOption object. The BreakfastOption will is specified bye the id given.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-breakfastoptions-update-breakfastoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-breakfastoptions-update-breakfastoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-breakfastoptions-update-breakfastoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"breakfast_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/breakfast_options/2"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-breakfastoptions-update-breakfastoption-example-http">
+                                    <pre><code class="hljs http">PUT /v1/breakfast_options/2 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"breakfast_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-breakfastoptions-delete-breakfastoption">
+                            Delete BreakfastOption
+                            <a href="#request-breakfastoptions-delete-breakfastoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete a BreakfastOption object. The BreakfastOption will is specified bye the id given.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-breakfastoptions-delete-breakfastoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-breakfastoptions-delete-breakfastoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-breakfastoptions-delete-breakfastoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "https://mest-kitchen-app.herokuapp.com/v1/breakfast_options/4"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-breakfastoptions-delete-breakfastoption-example-http">
+                                    <pre><code class="hljs http">DELETE /v1/breakfast_options/4 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-lunchoptions">
+                        LunchOptions
+                        <a href="#folder-lunchoptions"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>LunchOptions, BreakfastOptions and SupperOptions are used to create the menu for each day.</p>
+
+<p>A LunchOption object specifies a particular meal and a date.</p>
+
+<p>A query can be made for the LunchOptions for a particular date. The returned list can be used to create a menu of choices, from which a user can select one as their lunch order for that day.</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-lunchoptions-create-lunchoption">
+                            Create LunchOption
+                            <a href="#request-lunchoptions-create-lunchoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create a LunchOption</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-lunchoptions-create-lunchoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-lunchoptions-create-lunchoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-lunchoptions-create-lunchoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"lunch_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/lunch_options"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-lunchoptions-create-lunchoption-example-http">
+                                    <pre><code class="hljs http">POST /v1/lunch_options HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"lunch_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-lunchoptions-read-lunchoption">
+                            Read LunchOption
+                            <a href="#request-lunchoptions-read-lunchoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get a LunchOption by it&rsquo;s id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-lunchoptions-read-lunchoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-lunchoptions-read-lunchoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-lunchoptions-read-lunchoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/lunch_options/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-lunchoptions-read-lunchoption-example-http">
+                                    <pre><code class="hljs http">GET /v1/lunch_options/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-lunchoptions-read-lunchoptions">
+                            Read LunchOptions
+                            <a href="#request-lunchoptions-read-lunchoptions"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get all LunchOptions in the database.</p>
+
+<p>Only useful for debugging purposes</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-lunchoptions-read-lunchoptions-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-lunchoptions-read-lunchoptions-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-lunchoptions-read-lunchoptions-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/lunch_options"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-lunchoptions-read-lunchoptions-example-http">
+                                    <pre><code class="hljs http">GET /v1/lunch_options HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-lunchoptions-update-lunchoption">
+                            Update LunchOption
+                            <a href="#request-lunchoptions-update-lunchoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update a particular LunchOption specified by the id given in the url</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-lunchoptions-update-lunchoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-lunchoptions-update-lunchoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-lunchoptions-update-lunchoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"lunch_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/lunch_options/2"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-lunchoptions-update-lunchoption-example-http">
+                                    <pre><code class="hljs http">PUT /v1/lunch_options/2 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"lunch_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-lunchoptions-delete-lunchoption">
+                            Delete LunchOption
+                            <a href="#request-lunchoptions-delete-lunchoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Deletea particular LunchOption specified by the id given in the url</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-lunchoptions-delete-lunchoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-lunchoptions-delete-lunchoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-lunchoptions-delete-lunchoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "https://mest-kitchen-app.herokuapp.com/v1/lunch_options/5"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-lunchoptions-delete-lunchoption-example-http">
+                                    <pre><code class="hljs http">DELETE /v1/lunch_options/5 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-meals">
+                        Meals
+                        <a href="#folder-meals"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-meals-create-meal">
+                            Create Meal
+                            <a href="#request-meals-create-meal"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create a meal object, a meal object consists of a name, a description, and a link to a picture of the meal. The link should be an absolute url to a picture. The picture can be hosted on any platform of your choice.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-meals-create-meal-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-meals-create-meal-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-meals-create-meal-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"meal" : {
+		"name": "Tom Brown",
+		"description": "Finest Tom Brown in the west",
+		"picture_path": ""
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/meals"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-meals-create-meal-example-http">
+                                    <pre><code class="hljs http">POST /v1/meals HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"meal" : {
+		"name": "Tom Brown",
+		"description": "Finest Tom Brown in the west",
+		"picture_path": ""
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-meals-read-meal">
+                            Read Meal
+                            <a href="#request-meals-read-meal"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get a meal by it&rsquo;s id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-meals-read-meal-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-meals-read-meal-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-meals-read-meal-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/meals/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-meals-read-meal-example-http">
+                                    <pre><code class="hljs http">GET /v1/meals/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-meals-read-meals">
+                            Read Meals
+                            <a href="#request-meals-read-meals"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get a list of all meals in the database</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-meals-read-meals-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-meals-read-meals-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-meals-read-meals-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/meals"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-meals-read-meals-example-http">
+                                    <pre><code class="hljs http">GET /v1/meals HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-meals-update-meal">
+                            Update Meal
+                            <a href="#request-meals-update-meal"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update a particular meal object, identified by the id specified.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-meals-update-meal-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-meals-update-meal-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-meals-update-meal-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"meal" : {
+		"name": "Jollof Rice",
+		"description": "Proper Ghanaian Jollof Rice",
+		"picture_path": ""
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/meals/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-meals-update-meal-example-http">
+                                    <pre><code class="hljs http">PUT /v1/meals/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"meal" : {
+		"name": "Jollof Rice",
+		"description": "Proper Ghanaian Jollof Rice",
+		"picture_path": ""
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-meals-delete-meal">
+                            Delete Meal
+                            <a href="#request-meals-delete-meal"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete a particular meal object, identified by the id specified.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-meals-delete-meal-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-meals-delete-meal-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-meals-delete-meal-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "https://mest-kitchen-app.herokuapp.com/v1/meals/2"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-meals-delete-meal-example-http">
+                                    <pre><code class="hljs http">DELETE /v1/meals/2 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-menu">
+                        Menu
+                        <a href="#folder-menu"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>The menu endpoint does not reference an actual menu object in the database. Instead, it is a sort of shorthand for performing operations on a list of breakfast_options, lunch_options and supper_options for a particular day at a go.</p>
+
+<p>NB: There is no endpoint for updating a menu. Instead you should delete the menu, and create it again</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-menu-create-menu">
+                            Create menu
+                            <a href="#request-menu-create-menu"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create breakfast_options, lunch_options and supper_options for a particular date at a go.</p>
+
+<p>The date should be in the format yyy-mm-dd, e.g. &ldquo;2017-05-01&rdquo;</p>
+
+<p>The breakfast_options, lunch_options, and supper_options are specified as an array of meal ids as shown below</p>
+
+<pre><code>{
+	&quot;menu&quot;: {
+	  &quot;serving_date&quot;: &quot;2017-05-01&quot;,
+	  &quot;breakfast_choices&quot;: [3,4],
+	  &quot;lunch_choices&quot;: [1,2],
+	  &quot;supper_choices&quot;: [5,6]
+	}
+}
+</code></pre>
+
+<p>Note that they are called breakfast_choices, lunch_choices and supper_choices <strong>not</strong> breakfast_options, lunch_options and supper_options as you would normally expect.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-menu-create-menu-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-menu-create-menu-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-menu-create-menu-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"menu": {
+	  "serving_date": "2017-05-01",
+	  "breakfast_choices": [3,4],
+	  "lunch_choices": [1,2],
+	  "supper_choices": [5,6]
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/menus"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-menu-create-menu-example-http">
+                                    <pre><code class="hljs http">POST /v1/menus HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"menu": {
+	  "serving_date": "2017-05-01",
+	  "breakfast_choices": [3,4],
+	  "lunch_choices": [1,2],
+	  "supper_choices": [5,6]
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-menu-read-menu">
+                            Read menu
+                            <a href="#request-menu-read-menu"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get the menu for a particular date.</p>
+
+<p>The date is specified in the url.
+It should be in this format yyy-mm-dd, e.g &ldquo;2017-05-01&rdquo;.</p>
+
+<p>The returned object is a list of breafast_options, a list of lunch_options and a list of supper_options for the specified date.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-menu-read-menu-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-menu-read-menu-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-menu-read-menu-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/menus/2017-05-01"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-menu-read-menu-example-http">
+                                    <pre><code class="hljs http">GET /v1/menus/2017-05-01 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-menu-read-menus">
+                            Read menus
+                            <a href="#request-menu-read-menus"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get the menu for a range of dates</p>
+
+<p>The start_dates and end_dates are specified in the url.
+They should be in this format yyy-mm-dd, e.g &ldquo;2017-05-01&rdquo;.</p>
+
+<p>The returned object is a list of breafast_options, a list of lunch_options and a list of supper_options for each day between the start_date and end_date specified (inclusive).</p>
+
+<p>This endpoint is mostly used for getting the menu for a particular week</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-menu-read-menus-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-menu-read-menus-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-menu-read-menus-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/menus/2017-05-01/2017-05-07"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-menu-read-menus-example-http">
+                                    <pre><code class="hljs http">GET /v1/menus/2017-05-01/2017-05-07 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-menu-delete-menu">
+                            Delete Menu
+                            <a href="#request-menu-delete-menu"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete the menu for a particular date.</p>
+
+<p>The date is specified in the url.  It should be in this format yyy-mm-dd, e.g &ldquo;2017-05-01&rdquo;.</p>
+
+<p>This will delete all the underlying breakfast_options, lunch_options and supper_options for that date.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-menu-delete-menu-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-menu-delete-menu-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-menu-delete-menu-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "https://mest-kitchen-app.herokuapp.com/v1/menus/2017-05-01"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-menu-delete-menu-example-http">
+                                    <pre><code class="hljs http">DELETE /v1/menus/2017-05-01 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-order">
+                        Order
+                        <a href="#folder-order"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-order-create-order">
+                            Create Order
+                            <a href="#request-order-create-order"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create an Order</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-order-create-order-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-order-create-order-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-order-create-order-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"order" : {
+		"user_id": 2,
+		"serving_date": "2017-05-01",
+		"breakfast_id": 3,
+		"lunch_id": 1,
+		"supper_id": 6
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/orders"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-order-create-order-example-http">
+                                    <pre><code class="hljs http">POST /v1/orders HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"order" : {
+		"user_id": 2,
+		"serving_date": "2017-05-01",
+		"breakfast_id": 3,
+		"lunch_id": 1,
+		"supper_id": 6
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-order-read-order">
+                            Read Order
+                            <a href="#request-order-read-order"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get an Order by it&rsquo;s id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-order-read-order-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-order-read-order-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-order-read-order-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/orders/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-order-read-order-example-http">
+                                    <pre><code class="hljs http">GET /v1/orders/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-order-read-orders">
+                            Read Orders
+                            <a href="#request-order-read-orders"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get all Orders in the database.</p>
+
+<p>Only useful for debugging purposes</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-order-read-orders-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-order-read-orders-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-order-read-orders-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/orders"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-order-read-orders-example-http">
+                                    <pre><code class="hljs http">GET /v1/orders HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-order-update-order">
+                            Update Order
+                            <a href="#request-order-update-order"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update a particular Order specified by the id given in the url</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-order-update-order-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-order-update-order-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-order-update-order-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"order" : {
+		"user_id": 2,
+		"menu_id": 2,
+		"breakfast_id": 1,
+		"lunch_id": 1,
+		"supper_id": 1
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/orders/2"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-order-update-order-example-http">
+                                    <pre><code class="hljs http">PUT /v1/orders/2 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"order" : {
+		"user_id": 2,
+		"menu_id": 2,
+		"breakfast_id": 1,
+		"lunch_id": 1,
+		"supper_id": 1
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-order-delete-order">
+                            Delete Order
+                            <a href="#request-order-delete-order"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete a particular Order specified by the id given in the url</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-order-delete-order-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-order-delete-order-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-order-delete-order-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "https://mest-kitchen-app.herokuapp.com/v1/orders/2"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-order-delete-order-example-http">
+                                    <pre><code class="hljs http">DELETE /v1/orders/2 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-supperoptions">
+                        SupperOptions
+                        <a href="#folder-supperoptions"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>SupperOptions, BreakfastOptions and LunchOptions are used to create the menu for each day.</p>
+
+<p>A SupperOption object specifies a particular meal and a date.</p>
+
+<p>A query can be made for the SupperOptions for a particular date. The returned list can be used to create a menu of choices, from which a user can select one as their supper order for that day.</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-supperoptions-create-supperoption">
+                            Create SupperOption
+                            <a href="#request-supperoptions-create-supperoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create a SupperOption</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-supperoptions-create-supperoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-supperoptions-create-supperoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-supperoptions-create-supperoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"supper_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/supper_options"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-supperoptions-create-supperoption-example-http">
+                                    <pre><code class="hljs http">POST /v1/supper_options HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"supper_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-supperoptions-read-supperoption">
+                            Read SupperOption
+                            <a href="#request-supperoptions-read-supperoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get a SupperOption by it&rsquo;s id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-supperoptions-read-supperoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-supperoptions-read-supperoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-supperoptions-read-supperoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/supper_options/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-supperoptions-read-supperoption-example-http">
+                                    <pre><code class="hljs http">GET /v1/supper_options/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-supperoptions-read-supperoptions">
+                            Read SupperOptions
+                            <a href="#request-supperoptions-read-supperoptions"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get all SupperOptions in the database.</p>
+
+<p>Only useful for debugging purposes</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-supperoptions-read-supperoptions-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-supperoptions-read-supperoptions-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-supperoptions-read-supperoptions-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/supper_options"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-supperoptions-read-supperoptions-example-http">
+                                    <pre><code class="hljs http">GET /v1/supper_options HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-supperoptions-update-supperoption">
+                            Update SupperOption
+                            <a href="#request-supperoptions-update-supperoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update a particular SupperOption specified by the id given in the url</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-supperoptions-update-supperoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-supperoptions-update-supperoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-supperoptions-update-supperoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"supper_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/supper_options/2"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-supperoptions-update-supperoption-example-http">
+                                    <pre><code class="hljs http">PUT /v1/supper_options/2 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"supper_option" : {
+		"serving_date": "Wed Apr 19 2017",
+		"meal_id": 4
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-supperoptions-delete-supperoption">
+                            Delete SupperOption
+                            <a href="#request-supperoptions-delete-supperoption"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete a particular SupperOption specified by the id given in the url</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-supperoptions-delete-supperoption-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-supperoptions-delete-supperoption-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-supperoptions-delete-supperoption-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "https://mest-kitchen-app.herokuapp.com/v1/supper_options/5"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-supperoptions-delete-supperoption-example-http">
+                                    <pre><code class="hljs http">DELETE /v1/supper_options/5 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+                
+                <div class="endpoints-group">
+                    <h3 id="folder-users">
+                        Users
+                        <a href="#folder-users"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>CRUD endpoionts for users</p>
+</div>
+
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-create-user">
+                            Create User
+                            <a href="#request-users-create-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create a new user, a user can either be
+kitchen_staff, eit, fellow, minc</p>
+
+<p>Authentication has not been implemented yet. So the user model main function currently is to be a container for orders</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-create-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-create-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-create-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+  "user" : {
+    "first_name": "Kwaku",
+    "last_name": "Boateng",
+    "email": "kwaku.boateng@meltwater.org",
+    "nationality": "ghana",
+    "sex": "male",
+    "user_type": "eit"
+  }
+}' "https://mest-kitchen-app.herokuapp.com/v1/users"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-create-user-example-http">
+                                    <pre><code class="hljs http">POST /v1/users HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+  "user" : {
+    "first_name": "Kwaku",
+    "last_name": "Boateng",
+    "email": "kwaku.boateng@meltwater.org",
+    "nationality": "ghana",
+    "sex": "male",
+    "user_type": "eit"
+  }
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-read-user">
+                            Read User
+                            <a href="#request-users-read-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Fetch a particular user via id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-read-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-read-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-read-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/users/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-read-user-example-http">
+                                    <pre><code class="hljs http">GET /v1/users/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-read-users">
+                            Read Users
+                            <a href="#request-users-read-users"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Fetch the list of all all available users in the database</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-read-users-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-read-users-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-read-users-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/users"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-read-users-example-http">
+                                    <pre><code class="hljs http">GET /v1/users HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-update-user">
+                            Update User
+                            <a href="#request-users-update-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update a user object. The user object is identified by it&rsquo;s id.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-update-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-update-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-update-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"user" : {
+	    "first_name": "Auntie",
+	    "last_name": "Martha",
+	    "email": "auntie.martha@meltwater.org",
+	    "nationality": "ghana",
+	    "sex": "female",
+		"user_type": "kitchen_staff"
+	}
+}' "https://mest-kitchen-app.herokuapp.com/v1/users/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-update-user-example-http">
+                                    <pre><code class="hljs http">PUT /v1/users/1 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com
+Content-Type: application/json
+
+{
+	"user" : {
+	    "first_name": "Auntie",
+	    "last_name": "Martha",
+	    "email": "auntie.martha@meltwater.org",
+	    "nationality": "ghana",
+	    "sex": "female",
+		"user_type": "kitchen_staff"
+	}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-users-delete-user">
+                            Delete User
+                            <a href="#request-users-delete-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete a user object. The user object is identified by it&rsquo;s id.</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-users-delete-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-users-delete-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-users-delete-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE "https://mest-kitchen-app.herokuapp.com/v1/users/4"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-users-delete-user-example-http">
+                                    <pre><code class="hljs http">DELETE /v1/users/4 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("table:not(.table)").addClass('table table-bordered');
+    });
+</script>
+</body>
+</html>
