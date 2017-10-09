@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/api-docs', to: redirect('/api-docs.html')
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   # Scope: Allows routing to controllers without showing it in the URL
