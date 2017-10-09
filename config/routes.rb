@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
   # Scope: Allows routing to controllers without showing it in the URL
   scope module: 'api' do
     namespace :v1 do
