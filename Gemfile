@@ -30,6 +30,9 @@ gem 'rack-cors'
 
 gem 'active_model_serializers'
 
+# Rails engine that provides an easy-to-use interface for managing your data
+gem 'rails_admin', '~> 1.2'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
