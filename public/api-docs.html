@@ -289,6 +289,10 @@ pre code {
                     <a href="#request-order-delete-order">Delete Order</a>
                 </li>
                 
+                <li>
+                    <a href="#request-order-orders-for-a-user">Orders for a User</a>
+                </li>
+                
             </ul>
         </li>
         
@@ -1385,6 +1389,42 @@ Content-Type: application/json
                                 </div>
                                 <div class="tab-pane" id="request-order-delete-order-example-http">
                                     <pre><code class="hljs http">DELETE /v1/orders/2 HTTP/1.1
+Host: mest-kitchen-app.herokuapp.com</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="request">
+
+                        <h4 id="request-order-orders-for-a-user">
+                            Orders for a User
+                            <a href="#request-order-orders-for-a-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get all Orders belonging to a user between a specified &lsquo;start_date&rsquo; and &lsquo;end_date&rsquo;.</p>
+
+<p>&lsquo;start_date&rsquo; can be ommited and the api server will use 1970-01-01 as the default</p>
+
+<p>&lsquo;end_date&rsquo; can be ommited and the api server will use the current date as the default</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-order-orders-for-a-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-order-orders-for-a-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-order-orders-for-a-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET "https://mest-kitchen-app.herokuapp.com/v1/users/1/orders?start_date='2017-09-07'&end_date='2017-09-18'"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-order-orders-for-a-user-example-http">
+                                    <pre><code class="hljs http">GET /v1/users/1/orders?start_date='2017-09-07'&end_date='2017-09-18' HTTP/1.1
 Host: mest-kitchen-app.herokuapp.com</code></pre>
                                 </div>
                             </div>

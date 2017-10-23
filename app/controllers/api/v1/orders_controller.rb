@@ -3,7 +3,10 @@ module Api::V1
     before_action :set_order, only: [:show, :update, :destroy]
 
     def index
-      @orders = Order.all
+      params[:start_date] ? start_date = Date.parse(params[:start_date]) : start_date = Date.parse('1970-01-01')
+      params[:end_date] ? end_date = Date.parse(params[:end_date]) : end_date = Date.today
+
+      @orders = Order.where(serving_date: start_date..end_date)
 
       render json: @orders
     end

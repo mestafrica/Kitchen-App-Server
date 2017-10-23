@@ -5,8 +5,11 @@ Rails.application.routes.draw do
 
   # Scope: Allows routing to controllers without showing it in the URL
   scope module: 'api' do
-    namespace :v1 do
-      resources :users # Routing to the V1 module.. We also want it to appear in our URL.
+    namespace :v1 do # Routing to the V1 module.. We also want it to appear in our URL.
+      resources :users
+      resources :users do
+        resources :orders, shallow: true
+      end
       resources :meals
       resources :orders
       resources :supper_options
